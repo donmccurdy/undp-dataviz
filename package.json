@@ -1,0 +1,23 @@
+{
+  "name": "undp-dataviz",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/donmccurdy/undp-dataviz.git"
+  },
+  "author": "Don McCurdy <dm@donmccurdy.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/donmccurdy/undp-dataviz/issues"
+  },
+  "homepage": "https://github.com/donmccurdy/undp-dataviz",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-bump": "^0.3.0"
+  }
+}
