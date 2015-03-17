@@ -24,7 +24,7 @@
 		renderer = new THREE.WebGLRenderer(),
 		camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
 
-	camera.position.z = -200;
+	camera.position.z = 200;
 	camera.up.set(0, -1, 0);
 	scene.add(camera);
 
@@ -67,7 +67,8 @@
 
 		mesh = new THREE.Mesh(paths[0], material);
 		mesh.name = country.data.name;
-		mesh.position.set(-475, 50, 20);
+		mesh.rotateY(Math.PI);
+		mesh.position.set(500, 50, 20);
 		scene.add(mesh);
 	}
 
@@ -118,7 +119,7 @@
 	********************************/
 
 	var pointLight2 = new THREE.PointLight(0xFFFFFF, 0.8);
-	pointLight2.position.z = -2000;
+	pointLight2.position.z = 2000;
 	scene.add(pointLight2);
 
 	/* Animation
