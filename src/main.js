@@ -68,7 +68,7 @@
 		mesh = new THREE.Mesh(paths[0], material);
 		mesh.name = country.data.name;
 		mesh.rotateY(Math.PI);
-		mesh.position.set(500, 50, 20);
+		mesh.position.set(500, 50, 0);
 		scene.add(mesh);
 	}
 
@@ -112,6 +112,16 @@
 			.intersectObjects(scene.children)
 			.forEach(function (intersect) {
 				console.log('  --> %s', intersect.object.name);
+				var scale = 10;
+				if (!intersect.object.extent) {
+					intersect.object.extent = scale;
+					intersect.object.scale.set(1, 1, scale);
+					intersect.object.position.setZ(scale - 1);
+				} else {
+					intersect.object.scale.set(1, 1, 1);
+					intersect.object.position.setZ(0);
+					delete intersect.object.extent;
+				}
 			});
 	});
 
