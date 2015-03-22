@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Stacking Things Up</title>
+		<title>Illustrating World Progress</title>
 
 		<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
-		<link rel="stylesheet" href="/assets/default.css">
+		<link href="/assets/default.css" rel="stylesheet" type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,600' rel='stylesheet' type='text/css'>
 
 		<script src="/bower_components/threejs/build/three.js"></script>
 		<script src="/bower_components/stats.js/build/stats.min.js"></script>
@@ -13,7 +14,22 @@
 		<script src="/lib/transformSVGPath.js"></script>
 	</head>
 	<body>
-		<div id="container"></div>
+		<div id="container" class="container"></div>
+		<div id="sidebar" class="sidebar">
+			<header>
+				<h1>Illustrating World Progress</h1>
+				<p class="subtitle">An interactive WebGL visualization.</p>
+			</header>
+			<section>
+				<h2>Indicators</h2>
+				<ul class="indicators"></ul>
+			</section>
+			<footer>
+				2015. Project by <a href="https://twitter.com/don_mccurdy">Don McCurdy</a>, data
+				by <a href="http://hdr.undp.org/en/dataviz-competition">UNDP HDRO</a>.
+			</footer>
+		</div>
 		<script src="src/main.js"></script>
+		<script src="src/sidebar.js"></script>
 	</body>
 </html>
