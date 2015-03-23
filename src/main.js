@@ -101,28 +101,45 @@
 	********************************/
 
 	var raycaster = new THREE.Raycaster(),
-		mouse = new THREE.Vector2();
+		mouse = new THREE.Vector2(),
+		dragging = false;
+
+	var onMove = function () {
+		dragging = true;
+		renderer.domElement.removeEventListener('mousemove', onMove);
+	};
+
+	renderer.domElement.addEventListener('mousedown', function () {
+		renderer.domElement.addEventListener('mousemove', onMove);
+	});
 
 	renderer.domElement.addEventListener('click', function (event) {
+		if (dragging) {
+			dragging = false;
+			return;
+		}
+		renderer.domElement.removeEventListener('mousemove', onMove);
+
 		mouse.x = 2 * event.clientX / WIDTH - 1;
 		mouse.y = -2 * event.clientY / HEIGHT + 1;
 		raycaster.setFromCamera(mouse, camera);
 
-		raycaster
-			.intersectObjects(scene.children)
-			.forEach(function (intersect) {
-				console.log('  --> %s', intersect.object.name);
-				var scale = 10;
-				if (!intersect.object.extent) {
-					intersect.object.extent = scale;
-					intersect.object.scale.set(1, 1, scale);
-					intersect.object.position.setZ(scale - 1);
-				} else {
-					intersect.object.scale.set(1, 1, 1);
-					intersect.object.position.setZ(0);
-					delete intersect.object.extent;
-				}
-			});
+		var intersects = raycaster.intersectObjects(scene.children),
+			intersect = intersects[0];
+
+		if (!intersect) return;
+
+		console.log('  --> %s', intersect.object.name);
+		var scale = 10;
+		if (!intersect.object.extent) {
+			intersect.object.extent = scale;
+			intersect.object.scale.set(1, 1, scale);
+			intersect.object.position.setZ(scale - 1);
+		} else {
+			intersect.object.scale.set(1, 1, 1);
+			intersect.object.position.setZ(0);
+			delete intersect.object.extent;
+		}
 	});
 
 	/* Lights
