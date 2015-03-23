@@ -37,8 +37,11 @@
 	/* Countries
 	********************************/
 
-	var COLORS = [0x588C7E, 0xF2E394, 0xF2AE72, 0xD96459, 0x8C4646],
-		EXTRUDE_AMOUNT = 1;
+	var COLORS = [0x588C7E, 0xF2E394, 0xF2AE72, 0xD96459, 0x8C4646, 0x8ADBC5, 0x5E2F2F],
+		EXTRUDE_AMOUNT = 1,
+		materials = COLORS.map(function (color) {
+			return new THREE.MeshPhongMaterial({color: color, opacity: 1.0});
+		});
 
 	window.fetch('assets/countries.json')
 		.then(function(response) {
@@ -50,7 +53,7 @@
 		});
 
 	function loadCountry (country) {
-		var mesh, color, material,
+		var mesh, material,
 			paths = THREE.transformSVGPath(country.feature);
 		
 		for (var i = 0; i < paths.length; i++) {
@@ -62,9 +65,7 @@
 			if (i > 0) paths[0].merge(paths[i]);
 		}
 
-		color = COLORS[Math.floor((Math.random() * COLORS.length))];
-		material = new THREE.MeshPhongMaterial({color: color, opacity: 1.0});
-
+		material = materials[country.data.mapcolor7 - 1];
 		mesh = new THREE.Mesh(paths[0], material);
 		mesh.name = country.data.name;
 		mesh.rotateY(Math.PI);
