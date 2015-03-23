@@ -11,6 +11,7 @@
     "threejs": "*",
     "three.map-controls": "~0.5.0",
     "stats.js": "*",
-    "fetch": "~0.7.0"
+    "fetch": "~0.7.0",
+    "lodash": "~3.5.0"
   }
 }

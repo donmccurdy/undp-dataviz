@@ -8,6 +8,15 @@
 
 (function (THREE, Stats) {
 
+	/* Lodash config
+	********************************/
+
+	_.templateSettings = {
+		evaluate:		/\{\{(.+?)\}\}/g,
+		interpolate:	/\{\{=(.+?)\}\}/g,
+		escape:			/\{\{-(.+?)\}\}/g
+	};
+
 	/* Scene
 	********************************/
 
