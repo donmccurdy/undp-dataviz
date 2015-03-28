@@ -7,6 +7,9 @@
 		mean_income: 'Mean Income'
 	};
 
+	var MIN_HEIGHT = 1,
+		MAX_HEIGHT = 100;
+
 	function Sidebar (/* ... */) {
 		this.init.apply(this, arguments);
 	}
@@ -48,15 +51,20 @@
 		},
 
 		scaleBy: function (property) {
-			var scale = 10;
-			for (var mesh, i = 0; i < this.countries.length; i++) {
+			var max = _(this.countries)
+				.pluck('metadata')
+				.pluck(property)
+				.max();
+
+			for (var mesh, value, i = 0; i < this.countries.length; i++) {
 				mesh = this.countries[i];
+				value = Math.max(MAX_HEIGHT * mesh.metadata[property] / max, MIN_HEIGHT);
 				if (property === 'none') {
 					mesh.scale.set(1, 1, 1);
 					mesh.position.setZ(0);
 				} else {
-					mesh.scale.set(1, 1, scale);
-					mesh.position.setZ(scale - 1);
+					mesh.scale.set(1, 1, value);
+					mesh.position.setZ(value - 1);
 				}
 			}
 		}
