@@ -6,7 +6,7 @@
  * @author Don McCurdy <dm@donmccurdy.com>
  */
 
-(function (THREE, Stats) {
+(function (THREE, Stats, Sidebar) {
 
 	/* Lodash config
 	********************************/
@@ -52,11 +52,15 @@
 			return new THREE.MeshPhongMaterial({color: color, opacity: 1.0});
 		});
 
+	var sidebar = new Sidebar(document.querySelector('#sidebar'));
+
 	window.fetch('assets/countries.json')
 		.then(function(response) {
 			return response.json();
 		}).then(function(countries) {
-			countries.forEach(loadCountry);
+			return countries.map(loadCountry);
+		}).then(function (countries) {
+			sidebar.loadCountries(countries);
 		}).catch(function(ex) {
 			console.log('Countries could not be loaded.', ex);
 		});
@@ -77,9 +81,11 @@
 		material = materials[country.data.mapcolor7 - 1];
 		mesh = new THREE.Mesh(paths[0], material);
 		mesh.name = country.data.name;
+		mesh.metadata = country.data;
 		mesh.rotateY(Math.PI);
 		mesh.position.set(500, 50, 0);
 		scene.add(mesh);
+		return mesh;
 	}
 
 	/* Stats
@@ -140,16 +146,6 @@
 		if (!intersect) return;
 
 		console.log('  --> %s', intersect.object.name);
-		var scale = 10;
-		if (!intersect.object.extent) {
-			intersect.object.extent = scale;
-			intersect.object.scale.set(1, 1, scale);
-			intersect.object.position.setZ(scale - 1);
-		} else {
-			intersect.object.scale.set(1, 1, 1);
-			intersect.object.position.setZ(0);
-			delete intersect.object.extent;
-		}
 	});
 
 	/* Lights
@@ -171,4 +167,4 @@
 	}
 	window.requestAnimationFrame(update);
 
-}(window.THREE, window.Stats));
+}(window.THREE, window.Stats, window.Sidebar));

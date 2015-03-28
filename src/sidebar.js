@@ -1,4 +1,4 @@
-(function () {
+(function (exports) {
 
 	var INDICATORS = {
 		none: 'Default',
@@ -20,6 +20,7 @@
 			this.tpl = {
 				sidebar: _.template(document.querySelector('#tpl-sidebar').text)
 			};
+			this.countries = [];
 			this.render();
 			this.bindEvents();
 		},
@@ -28,6 +29,10 @@
 			this.view.indicators.innerHTML = this.tpl.sidebar({
 				indicators: INDICATORS
 			});
+		},
+
+		loadCountries: function (countries) {
+			this.countries = countries;
 		},
 
 		bindEvents: function () {
@@ -39,10 +44,24 @@
 		},
 
 		onChange: function (e) {
-			console.log(e.target);
+			this.scaleBy(e.target.value);
+		},
+
+		scaleBy: function (property) {
+			var scale = 10;
+			for (var mesh, i = 0; i < this.countries.length; i++) {
+				mesh = this.countries[i];
+				if (property === 'none') {
+					mesh.scale.set(1, 1, 1);
+					mesh.position.setZ(0);
+				} else {
+					mesh.scale.set(1, 1, scale);
+					mesh.position.setZ(scale - 1);
+				}
+			}
 		}
 	});
 
-	return new Sidebar(document.querySelector('#sidebar'));
+	exports.Sidebar = Sidebar;
 
-}());
+}(window));
