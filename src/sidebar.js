@@ -1,10 +1,11 @@
 (function (exports) {
 
 	var INDICATORS = {
-		none: 'Default',
-		pop_est: 'Population',
-		gdp: 'GDP',
-		mean_income: 'Mean Income'
+		NONE: 'Default',
+		POPULATION_2011: 'Population',
+		GROSS_NATIONAL_INCOME_2013: 'Gross National Income',
+		MEAN_YEARS_SCHOOLING_2013: 'Mean Years Schooling',
+		LIFE_EXPECTANCY_2013: 'Life Expectancy'
 	};
 
 	var MIN_HEIGHT = 1,
@@ -24,6 +25,7 @@
 				sidebar: _.template(document.querySelector('#tpl-sidebar').text)
 			};
 			this.countries = [];
+			this.indicators = [];
 			this.render();
 			this.bindEvents();
 		},
@@ -36,6 +38,10 @@
 
 		loadCountries: function (countries) {
 			this.countries = countries;
+		},
+
+		loadIndicators: function (indicators) {
+			this.indicators = indicators;
 		},
 
 		bindEvents: function () {
@@ -51,20 +57,26 @@
 		},
 
 		scaleBy: function (property) {
-			var max = _(this.countries)
-				.pluck('metadata')
-				.pluck(property)
-				.max();
+			var mesh, iso, value, height, max;
 
-			for (var mesh, value, i = 0; i < this.countries.length; i++) {
+			// Find max value
+			max = _.max(this.indicators[property]);
+
+			for (var i = 0; i < this.countries.length; i++) {
 				mesh = this.countries[i];
-				value = Math.max(MAX_HEIGHT * mesh.metadata[property] / max, MIN_HEIGHT);
-				if (property === 'none') {
+				if (property === 'NONE') {
+					// Reset height
 					mesh.scale.set(1, 1, 1);
 					mesh.position.setZ(0);
 				} else {
-					mesh.scale.set(1, 1, value);
-					mesh.position.setZ(value - 1);
+					// Compute relative height
+					iso = mesh.metadata.iso_a3;
+					value = this.indicators[property][iso];
+					height = Math.max(MAX_HEIGHT *  value / max, MIN_HEIGHT);
+
+					// Scale
+					mesh.scale.set(1, 1, height);
+					mesh.position.setZ(height - 1);
 				}
 			}
 		}

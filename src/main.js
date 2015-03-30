@@ -54,6 +54,15 @@
 
 	var sidebar = new Sidebar(document.querySelector('#sidebar'));
 
+	window.fetch('assets/indicators-2013.json')
+		.then(function (response) {
+			return response.json();
+		}).then(function (indicators) {
+			sidebar.loadIndicators(indicators);
+		}).catch(function (error) {
+			console.log('Indicators could not be loaded.', error);
+		});
+
 	window.fetch('assets/countries.json')
 		.then(function(response) {
 			return response.json();
@@ -61,8 +70,8 @@
 			return countries.map(loadCountry);
 		}).then(function (countries) {
 			sidebar.loadCountries(countries);
-		}).catch(function(ex) {
-			console.log('Countries could not be loaded.', ex);
+		}).catch(function (error) {
+			console.log('Countries could not be loaded.', error);
 		});
 
 	function loadCountry (country) {
