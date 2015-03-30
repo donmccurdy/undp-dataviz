@@ -160,9 +160,24 @@
 	/* Lights
 	********************************/
 
-	var pointLight2 = new THREE.PointLight(0xFFFFFF, 0.8);
-	pointLight2.position.z = 2000;
-	scene.add(pointLight2);
+	var LIGHT_COUNT = 5,
+		LIGHT_INTENSITY = 0.18,
+		LIGHT_SPREAD = 1000,
+		LIGHT_HEIGHT = 2000;
+
+	var lights = [];
+	for (var i = 0; i < LIGHT_COUNT; i++) {
+		lights.push(new THREE.PointLight(0xFFFFFF, LIGHT_INTENSITY));
+		lights[i].position.z = i === 0 ? LIGHT_HEIGHT : LIGHT_HEIGHT / 3;
+		scene.add(lights[i]);
+	}
+
+	lights[1].position.x = LIGHT_SPREAD;
+	lights[2].position.x = -LIGHT_SPREAD;
+	lights[3].position.y = LIGHT_SPREAD;
+	lights[4].position.y = -LIGHT_SPREAD;
+
+	scene.add(new THREE.AmbientLight(0x404040));
 
 	/* Animation
 	********************************/
