@@ -19,10 +19,12 @@
 		init: function (el) {
 			this.view = {
 				el: el,
-				indicators: el.querySelector('.indicators')
+				indicators: el.querySelector('.indicators'),
+				detail: el.querySelector('.country-detail')
 			};
 			this.tpl = {
-				sidebar: _.template(document.querySelector('#tpl-sidebar').text)
+				sidebar: _.template(document.querySelector('#tpl-sidebar').text),
+				detail: _.template(document.querySelector('#tpl-detail').text)
 			};
 			this.countries = [];
 			this.indicators = [];
@@ -34,6 +36,19 @@
 			this.view.indicators.innerHTML = this.tpl.sidebar({
 				indicators: INDICATORS
 			});
+			this.renderDetail();
+		},
+
+		renderDetail: function (iso) {
+			if (!iso) {
+				this.view.detail.innerHTML = this.tpl.detail({name: '???'});
+				return;
+			}
+			var country = _(this.countries)
+				.pluck('metadata')
+				.where({iso_a3: iso})
+				.first();
+			this.view.detail.innerHTML = this.tpl.detail(country);
 		},
 
 		loadCountries: function (countries) {

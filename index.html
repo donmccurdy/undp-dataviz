@@ -32,6 +32,7 @@
 					<li><span class="control-label">Zoom</span>: Scroll / Mousewheel</li>
 				</ul>
 			</section>
+			<section class="country-detail"></section>
 			<footer>
 				Don McCurdy, 2015. <p>[TODO: Data Sources]</p>
 			</footer>
@@ -48,6 +49,17 @@
 					</label>
 				</li>
 			{{ }) }}
+		</script>
+		<script id="tpl-detail" type="text/template">
+			<h2>{{- name }}</h2>
+			<ul>
+				<li><span class="meta-label">Income Group</span>: ...</li>
+				<li><span class="meta-label">Economy</span>: ...</li>
+			</ul>
+			<ul>
+				<li><span class="stat-label">Stat 1</span>: ...</li>
+				<li><span class="stat-label">Stat 2</span>: ...</li>
+			</ul>
 		</script>
 
 		<!-- SOURCE -->

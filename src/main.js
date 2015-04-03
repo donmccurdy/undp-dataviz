@@ -138,7 +138,7 @@
 		renderer.domElement.addEventListener('mousemove', onMove);
 	});
 
-	renderer.domElement.addEventListener('click', function (event) {
+	renderer.domElement.addEventListener('mousemove', _.throttle(function (event) {
 		if (dragging) {
 			dragging = false;
 			return;
@@ -154,8 +154,9 @@
 
 		if (!intersect) return;
 
-		console.log('  --> %s', intersect.object.name);
-	});
+		sidebar.renderDetail(intersect.object.metadata.iso_a3);
+
+	}, 100));
 
 	/* Lights
 	********************************/
