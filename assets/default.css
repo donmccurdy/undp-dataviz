@@ -49,6 +49,9 @@ body {
 	font-weight: 300;
 	margin: 0;
 }
+.sidebar .control-label {
+	font-weight: bold;
+}
 footer {
   position: absolute;
   bottom: 0;
