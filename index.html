@@ -57,8 +57,9 @@
 				<li><span class="meta-label">Economy</span>: ...</li>
 			</ul>
 			<ul>
-				<li><span class="stat-label">Stat 1</span>: ...</li>
-				<li><span class="stat-label">Stat 2</span>: ...</li>
+				{{ _.forEach(indicators, function (value, label) { }}
+					<li><span class="stat-label">{{- label }}</span>: {{- value }}</li>
+				{{ }) }}
 			</ul>
 		</script>
 

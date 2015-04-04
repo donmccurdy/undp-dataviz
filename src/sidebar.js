@@ -41,13 +41,25 @@
 
 		renderDetail: function (iso) {
 			if (!iso) {
-				this.view.detail.innerHTML = this.tpl.detail({name: '???'});
+				this.view.detail.innerHTML = this.tpl.detail({
+					name: '???',
+					indicators: []
+				});
 				return;
 			}
 			var country = _(this.countries)
 				.pluck('metadata')
 				.where({iso_a3: iso})
 				.first();
+
+			var self = this;
+			country.indicators = {};
+			_.forEach(INDICATORS, function (label, key) {
+				if (key !== 'NONE') {
+					country.indicators[label] = self.indicators[key][iso];
+				}
+			});
+
 			this.view.detail.innerHTML = this.tpl.detail(country);
 		},
 
