@@ -20,7 +20,8 @@
 			this.view = {
 				el: el,
 				indicators: el.querySelector('.indicators'),
-				detail: el.querySelector('.country-detail')
+				detail: el.querySelector('.country-detail'),
+				handle: el.querySelector('.sidebar-handle')
 			};
 			this.tpl = {
 				sidebar: _.template(document.querySelector('#tpl-sidebar').text),
@@ -72,11 +73,20 @@
 		},
 
 		bindEvents: function () {
-			var radios = this.view.indicators.querySelectorAll('input'),
+			var self = this,
+				radios = this.view.indicators.querySelectorAll('input'),
 				onChange = _.bind(this.onChange, this);
 			for (var i = 0; i < radios.length; i++) {
 				radios[i].addEventListener('change', onChange);
 			}
+			this.view.handle.addEventListener('click', function () {
+				var classList = self.view.el.classList;
+				if (classList.contains('open')) {
+					classList.remove('open');
+				} else {
+					classList.add('open');
+				}
+			});
 		},
 
 		onChange: function (e) {

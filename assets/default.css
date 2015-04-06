@@ -11,23 +11,62 @@ body {
 	width: 100%;
 	height: 100%;
 }
-.sidebar {
-	display: block;
-	position: absolute;
-	top: 0;
-	right: 0;
-	width: 250px;
-	height: 100%;
+*, *:before, *:after {
+	box-sizing: border-box;
 }
 
 /* Sidebar
 ********************************/
 
 .sidebar {
-	box-sizing: border-box;
+	display: block;
+	position: absolute;
+	top: 0;
+	right: -242px;
+	width: 250px;
+	height: 100%;
 	background: #e0e0e0;
 	border-left: 1px solid #ccc;
 	padding: 7px 10px 10px 10px;
+	transition: 0.2s right ease;
+	-webkit-transition: 0.2s right ease;
+}
+.sidebar.open {
+	right: 0;
+}
+.sidebar-handle {
+	position: absolute;
+	top: 8px;
+	left: -42px;
+	height: 42px;
+	width: 42px;
+	cursor: pointer;
+	font-weight: 300;
+	background: #e0e0e0;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	border-top-left-radius: 2px;
+	border-bottom-left-radius: 2px;
+}
+.sidebar-handle .handle {
+	position: absolute;
+	color: #808080;
+	font-size: 2.5em;
+	line-height: 1em;
+	left: 50%;
+	margin-left: -6px;
+	top: 50%;
+	margin-top: -24px;
+}
+.handle-close {
+	display: none;
+}
+.sidebar.open .handle-close {
+	display: block;
+}
+.sidebar.open .handle-open {
+	display: none;
 }
 .sidebar h1, h2, h3 {
 	font-weight: 300;
