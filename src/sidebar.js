@@ -87,6 +87,9 @@
 					classList.add('open');
 				}
 			});
+			if (window.matchMedia('(max-width: 728px)')) {
+				this.view.el.classList.remove('open');
+			}
 		},
 
 		onChange: function (e) {
